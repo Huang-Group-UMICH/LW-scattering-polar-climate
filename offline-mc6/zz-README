@@ -1,0 +1,22 @@
+-----------
+README
+
+Run offline MC6 ice optical scheme
+
+Yi-Hsuan Chen
+yihsuan@umich.edu
+-----------
+
+Step:
+
+1. Edit zz-mc6.f90 to change parameter values
+	iciwp: in-cloud ice water path (kg/m2)
+	deis : ice effectice diameter (microns)
+	band : print optical depth at this band on screen
+
+2. type 'make' to complie the all the codes. The execute file is 'test111'
+
+3. type './test111'. The optical depth at the given band will be printed on screen.
+
+** If needed, type 'make clean' to remove all objects
+

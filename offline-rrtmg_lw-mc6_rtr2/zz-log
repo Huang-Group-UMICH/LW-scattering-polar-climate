@@ -1,0 +1,56 @@
+=====================================================================
+Note of integrating TAMU LW scattering & ice optics into CESM1.1.1
+
+Yi-Hsuan Chen
+=====================================================================
+
+2017/02/28
+	1. MODIFY input/output of subroutine *inatm* and *rrtmg_lw* to include TAMU-needed cloud ice optical variables, ssacmc & xmommc
+	2. Test ok
+
+	x. ONGOING work
+		a. modify rrtmg_lw_rtr2function.f90 to take cloud variables at g-point dimension
+
+2017/03/02
+	1. MOVE TAMU's subroutine *rtr2function* into rrtmg_lw_rtrnmc.f90 so that CESM dosen't complie extra file.
+	2. MODIFY the dimensions of cloud varaibles of rtr2function to match those used in RRTMG_LW, i.e. (nlay,ig) to (ig,nlay)
+	3. TEST of rtr2function for MLS with a single-layer cloud is done.
+
+	x. ONGOING work
+		a. clean modified codes and then test within CESM
+		b. MODIFY mcica to generate SSA, ASY subcolumns in CESM
+
+2017/03/03
+	1. ADD logical variable to control whether applying cloud LW scattering in rrtmg_lw_rad.f90
+
+2017/03/11
+	1. FOUND that clear-sky flux difference between tamu and default is ~ 2 W/m2 at the TOA.
+
+2017/03/17
+	1. If there is a temperature at the surface (i.e. surface temperature is less than the lowermost atmosphere), 
+	   downward flux by TAMU and default RRTMG are quite different (downward 3 Wm-2 diff).
+
+2017/04/01
+	1. Replace rtr2func by the original and updated one by Chia-Pang, insensitiveness of surface temperature is still there.
+	   So, it is NOT due to my modication for dimension of cloud variables.
+	       it is NOT due to fortran compiler. (now I use Intel as Chia-Pang)
+	   So, how to find out the reason?
+	     a. use the exactly same input fields as the column mode
+	   
+2017/06/06
+	1. Using the MLS profile from the RRTMG column mode, the Two Function shows the sensitivity of surface temperatures.
+	   The result is almost identical to the column mode of Two Function.
+	   So, some issues in the Chou MLS profile lead to the error the Two function.
+
+2017/06/07
+	1. Confirm that the discrepancy of different surface temperature between TwoFunction and Default is due to Chou MLS profile.
+	   I inserted the Chou MLS profile into the column mode of RRTMG, the cooling rate at the lowermost layer is not changed in different surface temp.
+
+2017/06/11
+	1. Closely review RRTMG column mode with MLS 75 profiel again. This time, the column mode shows that the cooling rate at the lowermost layer does change with different surface temp.
+	   It contradicts with my note on 06/07. I think I made some mistakes on June 7.
+	   So, there is no any problem regarding the RRTMG column mode with 75 and 71 MLS profile. But I can make sure with Chia-Pang that we are on the same page.
+	2. I use two ways to read MLS 75 profile: one is used read-in T,P,... profile, which is as the same as my ordinary tests, and the other is used read-in AFTER inatm profile, which is as the same as 71 MLS.
+           These two ways generate different heating rate profile. The former shows independency to surface temps while the latter shows dependency, as the same as column mode of RRTMG.
+	3. I think the read-in atm profile is wrong. In order to change surface temperature, both surface temp (line #5) and that on the first column of level temperature (line #4) must be changed. I only changed line #5 recently, so I got different results. 
+

@@ -1,0 +1,10 @@
+sas
+48
+100.
+0.1
+noScat
+1.5
+data_plot01-xx3_all_cld_atm_surf-atm_sas-kcld_48-rei_100-iciwp_0.1-qfac_1.50-noScat-flux.txt
+data_plot01-xx3_all_cld_atm_surf-atm_sas-kcld_48-rei_100-iciwp_0.1-qfac_1.50-noScat-spectral.txt
+data_plot01-xx3_all_cld_atm_surf-atm_sas-kcld_48-rei_100-iciwp_0.1-qfac_1.50-noScat-out.txt
+data_plot01-xx3_all_cld_atm_surf-atm_sas-kcld_48-rei_100-iciwp_0.1-qfac_1.50-noScat-vars1.txt

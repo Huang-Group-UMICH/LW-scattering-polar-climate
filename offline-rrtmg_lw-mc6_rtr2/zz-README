@@ -1,0 +1,25 @@
+-----------
+README
+
+Run offline RRTMG-LW with MC6 ice optical scheme
+
+Yi-Hsuan Chen
+yihsuan@umich.edu
+-----------
+
+Main program:
+	zz-input-sas.txt	: Sub-Arctic summer profile, download from RFM standard Atmospheric Profiles (http://eodg.atm.ox.ac.uk/RFM/atm/)
+	zz-input-saw.txt	: Sub-Arctic winter profile, download from RFM standard Atmospheric Profiles (http://eodg.atm.ox.ac.uk/RFM/atm/)
+	zz-mainlw.f90		: main program to exetute the offline calculations. It will read parameter values from zz-input-parameter.txt
+
+Step:
+
+	1. Edit zz-mc6_rtr2.sh to change parameter values, e.g. ice effective radius, ice water path etc. This script will create a new zz-input-parameter.txt.
+
+	2. type 'make' to complie the all the codes. The execute file is 'test111'
+
+	3. type './test111'. The optical depth at the given band will be printed on screen.
+
+** If needed, type 'make clean' to remove all objects
+** If needed, you can modify atmospheric optical depth (taut) and Planck emission at surface (plankbnd) and atmosphere (planklev, planklay) in rrtmg_lw_rad.f90.
+
